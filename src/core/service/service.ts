@@ -1,5 +1,5 @@
 import { Document, Types as MongooseTypes } from 'mongoose';
-import { Repository } from "./repository";
+import { Repository } from "../repository/repository";
 import { BaseModel } from '../model/base.model';
 
 export class Service<M extends BaseModel, D extends M & Document, R extends Repository<M, D>> {

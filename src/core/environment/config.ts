@@ -1,30 +1,27 @@
-import { EnvKey } from "../tools/enums/env.key.enums";
-import dotenv from 'dotenv';
 
+import * as dotenv from 'dotenv'
+
+dotenv.config({ path: ".env" });
 
 export const mongoConfig = {
 	get path(): string {
-		return "mongodb://localhost/nest-server";
+		return process.env.MONGO_PATH;
 	}
 }
 
 export const tokenConfig = {
 	get encryptionSacretKey(): string {
-		return process.env[EnvKey.ENCRYPTION_SACRET_KEY];
+		return process.env.ENCRYPTION_SACRET_KEY;
 	},
 
 	get jwtSacretKey(): string {
-		return process.env[EnvKey.JWT_SACRET_KEY];
+		return process.env.JWT_SACRET_KEY;
 	},
 }
 
 export const appConfig = {
 	get apiPort(): string {
-		return process.env[EnvKey.API_PORT];
-	},
-
-	get clientDomain(): string {
-		return process.env[EnvKey.CLIENT_DOMAIN];
+		return process.env.API_PORT;
 	},
 
 }
