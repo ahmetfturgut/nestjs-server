@@ -35,12 +35,12 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
-  @Post()
+  @Post("updateUser")
   async updateUser(@Body() request: UpdateUserRequestDto) {
 
     let user = await this.userService.findById(request.id);
-    user = { ...user, ...request };
-
+    user.name = request.name;
+    user.surname = request.surname;
     return this.userService.update(user);
   }
 

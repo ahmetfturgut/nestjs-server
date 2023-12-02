@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Max, Min } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Matches, Max, Min } from "class-validator";
+import { RegexClass } from "src/core/tools/enums/validation.enum";
 
 export class CreateUserRequestDto {
 
@@ -14,10 +15,8 @@ export class CreateUserRequestDto {
     @IsNotEmpty()
     surname: string;
 
-    @IsString()
-    @IsNotEmpty()
-    @Min(6)
-    @Max(10)
+    @IsString()  
+    @Matches(RegexClass.PASSWORD, { message: "password error" })
     password: string;
 
 }
@@ -27,11 +26,7 @@ export class UpdateUserRequestDto {
 
     @IsString()
     @IsNotEmpty()
-    id: string
-
-    @IsString()
-    @IsOptional()
-    email: string;
+    id: string 
 
     @IsString()
     @IsOptional()
@@ -40,9 +35,6 @@ export class UpdateUserRequestDto {
     @IsString()
     @IsOptional()
     surname: string;
-
-    @IsString()
-    @IsOptional()
-    password: string;
+ 
 
 }
