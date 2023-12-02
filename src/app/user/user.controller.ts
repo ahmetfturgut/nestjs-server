@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserRequestDto, UpdateUserRequestDto } from './dto/create-user.dto';
 import { User } from './user.model';
+import { ApiException } from '../_common/api/api.exeptions';
+import { ApiError } from '../_common/api/api.error';
 
 @Controller('user')
 export class UserController {
@@ -12,8 +14,8 @@ export class UserController {
     @Body() request: CreateUserRequestDto
   ): Promise<any> {
 
-    if (await this.userService.exists({ email: request.email })) { 
-      return;
+    if (await this.userService.exists({ email: request.email })) {          
+      throw ApiException.buildFromApiError(ApiError.USER_EMAIL_EXISTS);
     }
 
     let newUser = new User();

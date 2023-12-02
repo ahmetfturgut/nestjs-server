@@ -3,7 +3,7 @@ import { Document, Types as MongooseTypes } from 'mongoose';
 import * as cryptoUtil from '../../core/tools/utils/crypto.util';
 import { UserType } from './enum/usertype.enum';
 import { UserState } from './enum/user.state';
-import { AuditModel, BaseModel, createSchema } from 'src/core/model/base.model';
+import { AuditModel, BaseModel, createSchema } from 'src/app/_common/model/base.model';
 
 export type UserDocument = User & Document;
 
