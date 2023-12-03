@@ -38,6 +38,9 @@ export const decrypt = async function (text: string): Promise<string> {
     return decrypted.toString();
 }
 
+export const verifyHash = function (password: string, hashedPassword: string, salt: string): boolean {
+    return hashedPassword == this.hashPaswordBySalt(password, salt);
+}
 
 export const generateSalt = function (): string {
     return crypto.randomBytes(SALT_LENGTH).toString('hex');
@@ -47,4 +50,8 @@ export const hashPaswordBySalt = function (password: string, salt: string): stri
     return crypto.pbkdf2Sync(password, salt, SALT_ROUNDS, 64, `sha512`).toString(`hex`);
 }
  
- 
+export const generateVerificationCode = function (min: number = 100000, max: number = 999999): string {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return "" + (Math.floor(Math.random() * (max - min)) + min);
+} 

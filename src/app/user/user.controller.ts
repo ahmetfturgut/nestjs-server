@@ -6,17 +6,19 @@ import { ApiException } from '../_common/api/api.exeptions';
 import { ApiError } from '../_common/api/api.error';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { UserTypes } from 'src/core/decorators/user-type.decorator';
+import { UserType } from './enum/usertype.enum';
+import { Public } from 'src/core/decorators/public.decorator';
 
 @Controller('user')
 export class UserController {
-
-
   constructor(
     private readonly userService: UserService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger
-  ) { 
+  ) {
   }
 
+  @Public()
   @Post("createUser")
   async createUser(
     @Body() request: CreateUserRequestDto
@@ -38,8 +40,10 @@ export class UserController {
     return this.userService.save(newUser);
   }
 
+
   @Get()
-  findAll() {
+  @UserTypes(UserType.SYSTEM_USER)//for Admin
+  getAllUser() {
     return this.userService.findAll();
   }
 

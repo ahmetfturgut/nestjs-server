@@ -1,0 +1,8 @@
+export const enum AuthType {
+
+    VERIFY_EMAIL = "VERIFY_EMAIL",
+    VERIFY_SIGNUP = "VERIFY_SIGNUP",
+    VERIFY_SIGNIN = "VERIFY_SIGNIN", 
+    SIGNIN = "SIGNIN",
+    PASSWORD = "PASSWORD", 
+};
