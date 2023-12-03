@@ -8,6 +8,10 @@ import { LoggerMiddleware } from 'src/core/middlewares/logger.middleware';
 import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import path from 'path';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { UserTypeGuard } from 'src/core/guards/user-type.guard';
+import { JwtAuthGuard } from 'src/core/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -38,10 +42,21 @@ import path from 'path';
         }),
       ],
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: UserTypeGuard,
+    },
+    AppService
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

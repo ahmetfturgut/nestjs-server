@@ -12,4 +12,8 @@ export class UserService extends Service<User, UserDocument, UserRepository> {
     super(repository);
   }
 
+  async getUserByEmail(email: User["email"]): Promise<User> {
+    return this.repository.getUserByEmail(email);
+}
+
 }

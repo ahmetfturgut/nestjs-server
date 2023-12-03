@@ -22,5 +22,6 @@ export class ApiError {
     // USER
     static readonly USER_EXISTS = new ApiError(201, 'User exists.');
     static readonly USER_EMAIL_EXISTS = new ApiError(202, 'User email exists.');
+    static readonly WRONG_EMAIL_OR_PASSWORD = new ApiError(203, 'Wrong email or password.');
 
 }

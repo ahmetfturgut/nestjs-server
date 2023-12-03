@@ -3,7 +3,7 @@ import { Document, Types as MongooseTypes } from 'mongoose';
 import * as cryptoUtil from '../../core/tools/utils/crypto.util';
 import { UserType } from './enum/usertype.enum';
 import { UserState } from './enum/user.state';
-import { AuditModel, BaseModel, createSchema } from 'src/app/_common/model/base.model';
+import { BaseModel, createSchema } from 'src/app/_common/model/base.model';
 
 export type UserDocument = User & Document;
 
@@ -30,17 +30,14 @@ export class User extends BaseModel {
     state: UserState;
 
     @Prop()
-    password: string;
-
-    @Prop({ type: Date })
-    passwordExpireDate: Date;
+    password: string; 
 
     @Prop()
     salt: string;
 
     @Prop()
-    lastLoginDate: Date; 
-    
+    lastLoginDate: Date;
+
 
 }
 
