@@ -1,20 +1,31 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserRequestDto, UpdateUserRequestDto } from './dto/create-user.dto';
 import { User } from './user.model';
 import { ApiException } from '../_common/api/api.exeptions';
 import { ApiError } from '../_common/api/api.error';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+
+
+  constructor(
+    private readonly userService: UserService,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger
+  ) { 
+  }
 
   @Post("createUser")
   async createUser(
     @Body() request: CreateUserRequestDto
   ): Promise<any> {
 
-    if (await this.userService.exists({ email: request.email })) {          
+    this.logger.warn('started createUser()', UserController.name);
+
+    if (await this.userService.exists({ email: request.email })) {
+      this.logger.error('email exist! ' + request.email);
       throw ApiException.buildFromApiError(ApiError.USER_EMAIL_EXISTS);
     }
 
