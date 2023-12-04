@@ -20,6 +20,8 @@ import { Language } from '../_common/enum/language.enum';
 import { ValidationPipe } from 'src/core/pipes/validation.pipe';
 import { ApiTags } from '@nestjs/swagger';
 import { SignInEmail } from '../email/dto/signin-user.email';
+import { AuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
+import { AuthenticatedUserDto } from './dto/authenticated-user.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -71,6 +73,7 @@ export class UserController {
 
   }
 
+  @UsePipes(new ValidationPipe())
   @Public()
   @Post("verifySignUp")
   async verifySignUp(
@@ -87,6 +90,7 @@ export class UserController {
   }
 
 
+  @UsePipes(new ValidationPipe())
   @Public()
   @Post("signIn")
   async signIn(
@@ -132,6 +136,7 @@ export class UserController {
     return response;
   }
 
+  @UsePipes(new ValidationPipe())
   @Public()
   @Post("verifySignIn")
   async verifySignIn(
@@ -168,13 +173,26 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @UsePipes(new ValidationPipe())
   @Post("updateUser")
-  async updateUser(@Body() request: UpdateUserRequestDto) {
+  async updateUser(
+    @Body() request: UpdateUserRequestDto,
+    @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto): Promise<any> {
+
+    this.logger.debug('started updateUser() ', UserController.name);
+
+    if (authenticatedUser.id != request.id) {
+      this.logger.error("You are not authorized to updateUser().");
+      throw ApiException.buildFromApiError(ApiError.NOT_AUTHORIZED);
+    }
 
     let user = await this.userService.findById(request.id);
     user.name = request.name;
     user.surname = request.surname;
+ 
+    this.logger.debug('done updateUser() ', UserController.name);
     return this.userService.update(user);
+  
   }
 
 }
