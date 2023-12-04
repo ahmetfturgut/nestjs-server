@@ -6,14 +6,10 @@ import { Service } from 'src/app/_common/service/service';
 @Injectable()
 export class UserService extends Service<User, UserDocument, UserRepository> {
 
-  constructor(
-    protected repository: UserRepository,
-  ) {
-    super(repository);
-  }
+  constructor(protected repository: UserRepository) { super(repository) }
 
   async getUserByEmail(email: User["email"]): Promise<User> {
     return this.repository.getUserByEmail(email);
-}
+  }
 
 }

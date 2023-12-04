@@ -13,12 +13,17 @@ import { UserState } from './enum/user.state';
 import { AuthService } from '../auth/auth.service';
 import { AuthendicatedUserInfoResponseDto, SignInResponseDto, VerifySignInResponseDto } from './dto/user.response.dto';
 import { SignInRequestDto, VerifySignInRequestDto } from './dto/users.request.dto';
+import { SignUpEmail } from '../email/dto/signup-user.email';
+import { EmailService } from '../email/email.service';
+import { EmailBuilder } from '../email/interface/email-builder';
+import { Language } from '../_common/enum/language.enum';
 
 @Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
+    private readonly emailService: EmailService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger
   ) {
   }
@@ -40,8 +45,20 @@ export class UserController {
     newUser.name = request.name;
     newUser.surname = request.surname;
     newUser.password = request.password;
+    newUser.type = UserType.USER;
+    
+    let auth = await this.authService.createVerifySignUpToken(newUser);
+    let user = await this.userService.save(newUser);
 
-    return this.userService.save(newUser);
+    let email = new SignUpEmail();
+    email.code = auth.verificationCode;
+    email.nameSurname = user.name + " " + user.surname;
+    email.to = user.email;
+    email.language = Language.EN;//user.lang
+
+    await this.emailService.sendMail(new EmailBuilder(email));
+    
+    
   }
 
 

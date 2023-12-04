@@ -19,13 +19,32 @@ export const tokenConfig = {
 	},
 }
 
+
+export const mailConfig = {
+	get mailHost(): string {
+		return process.env.MAIL_HOST;
+	},
+	get mailPort(): number {
+		return Number(process.env.MAIL_PORT);
+	},
+	get mailUser(): string {
+		return process.env.MAIL_USER;
+	},
+	get mailPassword(): string {
+		return process.env.MAIL_PASSWORD;
+	},
+	get mailFrom(): string {
+		return process.env.MAIL_FROM;
+	},
+}
+
 export const expiresTimeConfig = {
 	get authExpiresIn(): number {
 		return parseInt(process.env.SESSION_TIMEOUT);
 	},
 	get verifyEmailExpiresIn(): number {
 		return parseInt(process.env.VERIFY_EMAIL_EXPIRES_IN);
-	}, 
+	},
 
 	get verifySignUpExpiresIn(): number {
 		return parseInt(process.env.VERIFY_SIGN_UP_EXPIRES_IN);
@@ -40,8 +59,8 @@ export const expiresTimeConfig = {
 		return parseInt(process.env.MAX_WRONG_TOKEN_ENTRY_COUNT);
 	},
 
-	
-	 
+
+
 }
 
 export const appConfig = {
