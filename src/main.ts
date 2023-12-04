@@ -10,6 +10,7 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Query } from 'mongoose';
 import { UserTypeGuard } from './core/guards/user-type.guard';
 import { JwtAuthGuard } from './core/guards/jwt-auth.guard';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 var __setOptions = Query.prototype.setOptions;
 
 Query.prototype.setOptions = function (options: any) {
@@ -29,7 +30,17 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
   app.useGlobalGuards(new UserTypeGuard(new Reflector()));
-  console.log("apiport:" + appConfig.apiPort)
+  
+  const config = new DocumentBuilder()
+    .setTitle('NestJS Core')
+    .setDescription('The NestJS Core API description')
+    .setVersion('1.0')
+    .addTag('apis')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+
   await app.listen(appConfig.apiPort);
 }
 bootstrap();

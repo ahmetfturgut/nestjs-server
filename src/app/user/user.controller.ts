@@ -18,8 +18,11 @@ import { EmailService } from '../email/email.service';
 import { EmailBuilder } from '../email/interface/email-builder';
 import { Language } from '../_common/enum/language.enum';
 import { ValidationPipe } from 'src/core/pipes/validation.pipe';
+import { ApiTags } from '@nestjs/swagger';
+import { SignInEmail } from '../email/dto/signin-user.email';
 
-@Controller('user')
+@Controller('users')
+@ApiTags('users')
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -115,12 +118,13 @@ export class UserController {
 
     console.log("verification code: " + auth.verificationCode);
 
-    // let email = new CodeEmail();
-    // email.verificationMailValidityPeriod = converMilliSecondtoMinute(expiresTimeConfig.verifySignInExpiresIn);
-    // email.code = auth.verificationCode;
-    // await this.emailService.sendMail(new EmailBuilder(email, user.lang)
-    //   .setTo(user.email)
-    // );
+    let email = new SignInEmail();
+    email.code = auth.verificationCode;
+    email.nameSurname = user.name + " " + user.surname;
+    email.to = user.email;
+    email.language = Language.EN;//user.lang
+
+    await this.emailService.sendMail(new EmailBuilder(email));
 
     var response = new SignInResponseDto();
     response.token = auth.token;

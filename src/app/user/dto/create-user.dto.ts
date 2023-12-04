@@ -1,21 +1,26 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsOptional, IsString, Matches, Max, Min } from "class-validator";
 import { RegexClass } from "src/core/tools/enums/validation.enum";
 
 export class CreateUserRequestDto {
 
+    @ApiProperty()
     @IsEmail()
     @IsNotEmpty()
     email: string;
 
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
     name: string;
 
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
     surname: string;
 
-    @IsString()  
+    @ApiProperty()
+    @IsString()
     @Matches(RegexClass.PASSWORD, { message: "password error" })
     password: string;
 
@@ -24,17 +29,20 @@ export class CreateUserRequestDto {
 
 export class UpdateUserRequestDto {
 
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    id: string 
+    id: string
 
+    @ApiProperty()
     @IsString()
     @IsOptional()
     name: string;
 
+    @ApiProperty()
     @IsString()
     @IsOptional()
     surname: string;
- 
+
 
 }
