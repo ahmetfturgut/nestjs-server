@@ -29,7 +29,7 @@ export class SignInRequestDto {
  
 
 }
-export class VerifySignInRequestDto {
+export class VerifySignInAndUpRequestDto {
     @IsString()
     token: string;
 

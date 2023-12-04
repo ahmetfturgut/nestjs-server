@@ -12,7 +12,7 @@ import { Public } from 'src/core/decorators/public.decorator';
 import { UserState } from './enum/user.state';
 import { AuthService } from '../auth/auth.service';
 import { AuthendicatedUserInfoResponseDto, SignInResponseDto, VerifySignInResponseDto } from './dto/user.response.dto';
-import { SignInRequestDto, VerifySignInRequestDto } from './dto/users.request.dto';
+import { SignInRequestDto, VerifySignInAndUpRequestDto } from './dto/users.request.dto';
 import { SignUpEmail } from '../email/dto/signup-user.email';
 import { EmailService } from '../email/email.service';
 import { EmailBuilder } from '../email/interface/email-builder';
@@ -46,9 +46,10 @@ export class UserController {
     newUser.surname = request.surname;
     newUser.password = request.password;
     newUser.type = UserType.USER;
-    
-    let auth = await this.authService.createVerifySignUpToken(newUser);
+
     let user = await this.userService.save(newUser);
+    newUser.id = user.id;
+    let auth = await this.authService.createVerifySignUpToken(newUser);
 
     let email = new SignUpEmail();
     email.code = auth.verificationCode;
@@ -57,8 +58,27 @@ export class UserController {
     email.language = Language.EN;//user.lang
 
     await this.emailService.sendMail(new EmailBuilder(email));
-    
-    
+
+    var response = new SignInResponseDto();
+    response.token = auth.token;
+    this.logger.debug("signUpBounter done.");
+    return response;
+
+  }
+
+  @Public()
+  @Post("verifySignUp")
+  async verifySignUp(
+    @Body() request: VerifySignInAndUpRequestDto
+  ): Promise<any> {
+
+    this.logger.debug('started createUser()', UserController.name);
+
+    let auth = await this.authService.verifySignUpToken(request.token, request.verificationCode);
+    let user = await this.userService.findById(auth.userId)
+    user.state = UserState.ACTIVE;
+    await this.userService.update(user);
+
   }
 
 
@@ -109,7 +129,7 @@ export class UserController {
   @Public()
   @Post("verifySignIn")
   async verifySignIn(
-    @Body() request: VerifySignInRequestDto
+    @Body() request: VerifySignInAndUpRequestDto
   ): Promise<VerifySignInResponseDto> {
 
     this.logger.debug('started verifySignIn() ', UserController.name);
@@ -141,7 +161,7 @@ export class UserController {
   getAllUser() {
     return this.userService.findAll();
   }
- 
+
   @Post("updateUser")
   async updateUser(@Body() request: UpdateUserRequestDto) {
 
