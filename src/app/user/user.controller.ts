@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Body, UsePipes , Inject } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserRequestDto, UpdateUserRequestDto } from './dto/create-user.dto';
 import { User } from './user.model';
@@ -17,6 +17,7 @@ import { SignUpEmail } from '../email/dto/signup-user.email';
 import { EmailService } from '../email/email.service';
 import { EmailBuilder } from '../email/interface/email-builder';
 import { Language } from '../_common/enum/language.enum';
+import { ValidationPipe } from 'src/core/pipes/validation.pipe';
 
 @Controller('user')
 export class UserController {
@@ -28,6 +29,7 @@ export class UserController {
   ) {
   }
 
+  @UsePipes(new ValidationPipe())
   @Public()
   @Post("createUser")
   async createUser(

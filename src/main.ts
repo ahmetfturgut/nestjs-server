@@ -25,6 +25,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   const httpAdapter = app.get(HttpAdapterHost);
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
   app.useGlobalGuards(new UserTypeGuard(new Reflector()));

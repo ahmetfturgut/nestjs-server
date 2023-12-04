@@ -9,13 +9,14 @@ import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-win
 import * as winston from 'winston';
 import path, { join } from 'path';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { UserTypeGuard } from 'src/core/guards/user-type.guard';
 import { JwtAuthGuard } from 'src/core/guards/jwt-auth.guard';
 import { MailerModule } from '@nestjs-modules/mailer'; 
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { EmailModule } from './email/email.module';
 import { mailConfig } from '../core/environment/config';
+import { ValidationPipe } from 'src/core/pipes/validation.pipe';
 
 @Module({
   imports: [
@@ -80,6 +81,10 @@ import { mailConfig } from '../core/environment/config';
     {
       provide: APP_GUARD,
       useClass: UserTypeGuard,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
     },
     AppService
   ],
