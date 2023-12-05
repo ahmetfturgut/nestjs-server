@@ -1,4 +1,3 @@
-//Her hatanın bir sebebi vardır...(Baran Basaran)
 export class ApiError {
 
     constructor(private readonly errorCode: number, private readonly message: string) { }
