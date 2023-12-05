@@ -43,8 +43,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     if (apiError) {
       responseBody.apiErrorCode = exception.getApiErrorCode();
       responseBody.data = exception.getData();
-    } else if (httpStatus == HttpStatus.BAD_REQUEST) {
-      // Todo
+    } else if (httpStatus == HttpStatus.BAD_REQUEST) { 
       responseBody.data = new BadRequestException('Bad Request Exception', exception);
     }
 
