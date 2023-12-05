@@ -5,10 +5,8 @@ import { User } from './user.model';
 import { ApiException } from '../_common/api/api.exeptions';
 import { ApiError } from '../_common/api/api.error';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { UserTypes } from 'src/core/decorators/user-type.decorator';
-import { UserType } from './enum/usertype.enum';
-import { Public } from 'src/core/decorators/public.decorator';
+import { Logger } from 'winston'; 
+import { UserType } from './enum/usertype.enum'; 
 import { UserState } from './enum/user.state';
 import { AuthService } from '../auth/auth.service';
 import { AuthendicatedUserInfoResponseDto, SignInResponseDto, VerifySignInResponseDto } from './dto/user.response.dto';
@@ -16,12 +14,14 @@ import { SignInRequestDto, VerifySignInAndUpRequestDto } from './dto/users.reque
 import { SignUpEmail } from '../email/dto/signup-user.email';
 import { EmailService } from '../email/email.service';
 import { EmailBuilder } from '../email/interface/email-builder';
-import { Language } from '../_common/enum/language.enum';
-import { ValidationPipe } from 'src/core/pipes/validation.pipe';
+import { Language } from '../_common/enum/language.enum'; 
 import { ApiTags } from '@nestjs/swagger';
-import { SignInEmail } from '../email/dto/signin-user.email';
-import { AuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
+import { SignInEmail } from '../email/dto/signin-user.email'; 
 import { AuthenticatedUserDto } from './dto/authenticated-user.dto';
+import { ValidationPipe } from '../../core/pipes/validation.pipe';
+import { Public } from '../../core/decorators/public.decorator';
+import { UserTypes } from '../../core/decorators/user-type.decorator';
+import { AuthenticatedUser } from '../../core/decorators/authenticated-user.decorator';
 
 @Controller('users')
 @ApiTags('users')

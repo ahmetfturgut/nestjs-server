@@ -1,5 +1,5 @@
  
-import { AuthenticatedUserDto } from "src/app/user/dto/authenticated-user.dto";
+import { AuthenticatedUserDto } from "../../../app/user/dto/authenticated-user.dto";
 import { Auth } from "../auth.model";
 
 export class AuthenticatedUserAuthDto  {  

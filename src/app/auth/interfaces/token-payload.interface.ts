@@ -1,5 +1,5 @@
  
-import { User } from "src/app/user/user.model";
+import { User } from "../../../app/user/user.model";
 import { Auth } from "../auth.model";
 
 export interface ITokenPayload {

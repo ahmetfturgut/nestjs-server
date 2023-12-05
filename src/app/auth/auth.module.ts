@@ -6,8 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthRepository } from './auth.repository';
 import { PassportModule } from '@nestjs/passport';  
 import { User, UserSchema } from '../user/user.model';
-import { expiresTimeConfig, tokenConfig } from 'src/core/environment/config';
-import { JwtStrategy } from 'src/core/strategy/jwt.strategy';
+import { expiresTimeConfig, tokenConfig } from '../../core/environment/config';
+import { JwtStrategy } from '../../core/strategy/jwt.strategy';
 
 @Global()
 @Module({

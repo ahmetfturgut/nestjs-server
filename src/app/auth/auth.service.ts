@@ -12,7 +12,7 @@ import { User } from '../user/user.model';
 import * as cryptoUtil from '../../core/tools/utils/crypto.util';
 import { Service } from '../_common/service/service';
 import { AuthenticatedUserDto } from '../user/dto/authenticated-user.dto';
-import { expiresTimeConfig } from 'src/core/environment/config';
+import { expiresTimeConfig } from '../../core/environment/config';
 import { UserState } from '../user/enum/user.state';
 
 @Injectable()

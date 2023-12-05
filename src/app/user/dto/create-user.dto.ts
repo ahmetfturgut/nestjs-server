@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Matches, Max, Min } from "class-validator";
-import { RegexClass } from "src/core/tools/enums/validation.enum";
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Matches, Max, Min } from "class-validator"; 
+import { RegexClass } from "../../../core/tools/enums/validation.enum";
 
 export class CreateUserRequestDto {
 

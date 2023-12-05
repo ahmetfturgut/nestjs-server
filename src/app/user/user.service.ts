@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { User, UserDocument } from './user.model';
-import { Service } from 'src/app/_common/service/service';
+import { User, UserDocument } from './user.model'; 
+import { Service } from '../_common/service/service';
 
 @Injectable()
 export class UserService extends Service<User, UserDocument, UserRepository> {
