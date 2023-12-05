@@ -1,8 +1,8 @@
 {
   "name": "nestjs-core",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "NestJS",
+  "author": "Ahmet Faruk TURGUT",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
